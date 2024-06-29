@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_staggered_grid_view: ^0.7.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -63,6 +64,23 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  assets:
+    - assets/appimages/light-honeycomb-dark.png
+    - assets/appimages/mikuhd.jpg
+    - assets/appimages/blackpenk.jpg
+    - assets/appimages/hoze.jpg
+    - assets/appimages/SOAD.jpg
+    - assets/appimages/adam lambert.jpg
+    - assets/appimages/avril.jpg
+
+  fonts:
+    - family: CreatoDisplay
+      fonts:
+        - asset: fonts/CreatoDisplay-Regular.otf
+        - asset: fonts/CreatoDisplay-Bold.otf
+          weight: 700
+        - asset: fonts/CreatoDisplay-RegularItalic.otf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
