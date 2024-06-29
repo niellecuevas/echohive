@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'dart:ui'; // For ImageFilter
-import 'artist_song_screen.dart'; // Ensure this file exists and is correctly imported
 
 class ArtistScreen extends StatelessWidget {
   final List<Map<String, String>> artists = [
@@ -16,37 +14,53 @@ class ArtistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GridView.builder(
-        padding: EdgeInsets.all(8.0),
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200.0, // Max width of each item
-          mainAxisSpacing: 8.0,
-          crossAxisSpacing: 8.0,
-          childAspectRatio: 2 / 3, // Aspect ratio for tiles
-        ),
-        itemCount: artists.length,
-        itemBuilder: (context, index) {
+      appBar: AppBar(
+        title: Text('Artists'),
+      ),
+      body: StaggeredGrid.count(
+        crossAxisCount: 4,
+        mainAxisSpacing: 8.0,
+        crossAxisSpacing: 8.0,
+        children: List.generate(artists.length, (index) {
           final artist = artists[index];
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ArtistSongsScreen(artistName: artist['name']!),
-                ),
-              );
-            },
+          final imageUrl = artist['image']!;
+
+          // Define the staggered tile size
+          final isEven = index % 2 == 0;
+          final crossAxisCellCount = 2;
+          final mainAxisCellCount = isEven ? 2 : 3;
+
+          return StaggeredGridTile.count(
+            crossAxisCellCount: crossAxisCellCount,
+            mainAxisCellCount: mainAxisCellCount,
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.0),
                 image: DecorationImage(
-                  image: AssetImage(artist['image']!),
+                  image: AssetImage(imageUrl),
                   fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              child: Center(
+                child: Text(
+                  artist['name']!,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 10.0,
+                        color: Colors.black.withOpacity(0.7),
+                        offset: Offset(2.0, 2.0),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           );
-        },
+        }),
       ),
     );
   }
